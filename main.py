@@ -4,14 +4,19 @@ from search_web import search_web
 from collect_feedback import collect_feedback
 from expand_query import expand_query
 
+
 def main(account_key, precision, queries):
     # print "account_key:", account_key
     # print "precision:", precision
     # print "query:", queries
+
+    # Search web pages by given queries
     results = search_web(account_key, queries)
     if len(results) < 10:
         print "Too few docs found, done"
         break
+
+    # Collect user feedback
     feedbacks = collect_feedback(results)
     this_precision = 1.0 * sum(feedbacks) / len(feedbacks)
     if this_precision == 0:
@@ -20,7 +25,10 @@ def main(account_key, precision, queries):
     if this_precision >= precision:
         print "Desired precision reached, done"
         break
+
+    # Expand queries by relevance feedback
     new_queries = expand_query(queries, results, feedbacks)
+
 
 if __name__ == '__main__':
     account_key = sys.argv[1]
