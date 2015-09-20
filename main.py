@@ -11,6 +11,7 @@ def main(account_key, precision, queries):
     # print "query:", queries
 
     while True:
+        print "Current Query:", queries
         # Search web pages by given queries
         results = search_web(account_key, queries)
         print len(results)
