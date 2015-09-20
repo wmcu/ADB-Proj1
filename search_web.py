@@ -7,9 +7,7 @@ import json
 
 def search_web(account_key, query_list):
     bing_url_prefix = 'https://api.datamarket.azure.com/Bing/Search/Web?Query='
-    pre_handled_query = ''
-    for one_query in query_list:
-        pre_handled_query = pre_handled_query + '+' + one_query
+    pre_handled_query = '+'.join(query_list)
 
     handled_query = '%27' + pre_handled_query + '%27'
     top = '$top=10'
