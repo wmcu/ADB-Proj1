@@ -6,6 +6,9 @@ import json
 
 
 def search_web(account_key, query_list):
+    """Call Bing search API
+    return: (results, final_url)
+    """
     bing_url_prefix = 'https://api.datamarket.azure.com/Bing/Search/Web?Query='
     pre_handled_query = '+'.join(query_list)
 
@@ -22,7 +25,7 @@ def search_web(account_key, query_list):
     json_content = json.loads(content)
     final_list = json_content['d']['results']
 
-    return final_list
+    return final_list, final_url
 
     # count = 1
     # for searchResult in final_list:

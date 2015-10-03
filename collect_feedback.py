@@ -6,9 +6,11 @@ def collect_feedback(results):
     feedback = []
     for index, result in enumerate(results):
         print 'Result', index + 1
+        print '['
         print 'URL:', result['Url']
         print 'Title:', result['Title']
-        print 'Description:', result['Description']
+        print 'Summary:', result['Description']
+        print ']'
         user_input = raw_input('Relevant (Y/N): ')
         feedback.append(1 if user_input == 'Y' else 0)
 

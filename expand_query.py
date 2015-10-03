@@ -1,4 +1,13 @@
 from collections import defaultdict
+import re
+from stopwords import STOPWORDS
+
+def filter_text(text):
+    """ Remove meaningless symbols from text
+    """
+    text_parts = re.split(r'\W+', text)
+    return ' '.join(text_parts)
+
 
 def expand_query(queries, results, feedbacks):
     """Expand query
@@ -9,6 +18,7 @@ def expand_query(queries, results, feedbacks):
     negative_text = ''
     for result, feedback in zip(results, feedbacks):
         text = result['Title'] + ' ' + result['Description']
+        text = filter_text(text)
         if feedback == 1:
             positive_text += ' ' + text
         else:
@@ -62,10 +72,13 @@ def expand_query(queries, results, feedbacks):
             word = word.encode('ascii', 'ignore')
         if not word:
             continue
-        if word not in queries:
-            queries.append(word)
+        if word in STOPWORDS:
+            continue
+        word_lower = word.lower()
+        if word_lower not in queries:
+            queries.append(word_lower)
             count += 1
-            if count >= 2:
+            if count >= 1:
                 break
 
     return queries
