@@ -53,7 +53,10 @@ The Bing serch result can contains some non-english word characters,
 like "..." and quotes. These characters are removed before being added to
 positive/negative word list.
 
-6. An interesting phenomenon
+6. Bing clinet key:
+/Hg13bNu9hmSAQfQXlpIdsEDEq+h2Zt03GHnlZ2EFKk
+
+7. An interesting phenomenon:
 We test our program from different places and the result from Bing search can
 vary from place to place. We guess this is caused by some kind of geography or
 ISP based mechanism from Bing.
