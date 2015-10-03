@@ -1,0 +1,59 @@
+1. Team:
+Meng Wang (mw2972)
+Youhan Wang (yw2663)
+
+2. Files:
+main.py 			- main python program
+search_web.py 		- helper function: calls Bing Search API
+collect_feedback.py - helper function: collects feedback of search results
+expand_query.py 	- helper function: expand query by relevance feedback
+stopwords.py		- stop words list
+README				- readme file
+
+3. How to Run:
+To run our program, execute the following command:
+
+	$python main.py <bing account key> <precision> <query>
+
+<bing account key>: our Bing Search Account Key
+<precision>: the target value for precision@10, a real between 0 and 1
+<query>: your query, a list of words in single quotes(e.g. 'taj mahal')
+
+4. Workflow:
+a. Receive inputs: bing account key, a query and a precision value.
+b. Retrive the top-10 query results from Bing, and collect user's feedback.
+c. Calculate precision, and expand query if desired presicion not reached.
+d. Otherwise go to step b.
+
+5. Algorithm for expanding query:
+a. Rocchio algorithm
+We followed Rocchio algorithm to calculate weights of words in query results.
+First, we collect every word from relevant results into a positive list,
+and word from irrelevant results into a negative list. Then weight of each
+unique word is calulated by: weight(word) = f_pos(word) - f_neg(word),
+where f_pos returns the word frequency in positive list, f_neg returns the word
+frequency in negative list. The "word frequency" in a list means the number
+of appearance divided by total length of list; if no appearance, word frequency
+is defined as 0.0.
+
+b. Choose words to expand query
+After each feedback round, one word with highest weight is appended to query
+word list. However, "stop words" words are skipped, as is explained in next
+point. We decided to add only word to because second word can have much lower
+weight than first word and thus bring in noise. Also, we make sure there are
+no two words only different in case appear in query word list.
+
+c. stop words list
+Certain "stop words", like "a", "the", are prevented being appended to query.
+In that way, even high-weighted stop words will not be included in query.
+Reference: http://xpo6.com/list-of-english-stop-words/
+
+d. Non english character filter
+The Bing serch result can contains some non-english word characters,
+like "..." and quotes. These characters are removed before being added to
+positive/negative word list.
+
+6. An interesting phenomenon
+We test our program from different places and the result from Bing search can
+vary from place to place. We guess this is caused by some kind of geography or
+ISP based mechanism from Bing.
